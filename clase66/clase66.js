@@ -206,7 +206,21 @@ const tamagochi = (accion) => {
 
 }
 
-console.log(tamagochi("dormir"))
+//console.log(tamagochi("acariciar"))
 
+/* 8) Crear una función esHoraValida que tome como argumento un string hora con el formato HH:mm y 
+determine si es una hora válida del día o no*/
+
+const esHoraValida = (str) => {
+    const hora = str.split(":")
+    //console.log(hora)
+    return (hora[0] <= 23 && hora[1] <= 59)
+}
+
+
+console.log (esHoraValida('12:23')) // true
+console.log (esHoraValida('12:65')) // false
+console.log (esHoraValida('28:05')) // false
+console.log (esHoraValida('00:00')) // true
 
 
