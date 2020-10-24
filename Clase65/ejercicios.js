@@ -24,7 +24,7 @@ restarPorcentaje(10, 40) // 6
 restarPorcentaje(200, 10) // 180*/
 
 const restarPorcentaje = (num, porcentaje) => {
-    return (porcentaje*num/100-(calcularPorcentaje()));
+    return (num-(calcularPorcentaje(num, porcentaje)));
     console.log(restarPorcentaje())
 }
 
@@ -60,3 +60,30 @@ siguiendo las siguientes reglas:
 aHackerSpeak('javascript') // 'j4v45cr1pt'
 aHackerSpeak('soy una hacker') // '50y un4 h4ck3r'
 aHackerSpeak('ADA LOVELACE') // '4D4 L0V3L4C3'*/
+
+
+const aHackerSpeak = (str) => {
+    
+    for(let i = 0; str.length > i; i++) {
+        if("i","I".includes(str[i])){ 
+            str = str.replace (str[i], "1");
+        }
+        if("e","E".includes(str[i])){ 
+            str = str.replace (str[i], "3");
+        }
+        if("a","A".includes(str[i])){ 
+            str = str.replace (str[i], "4");
+        }
+        if("s","S".includes(str[i])){ 
+            str = str.replace (str[i], "5");
+        }
+        if("o","O".includes(str[i])){ 
+            str = str.replace (str[i], "0");
+        }
+    }
+    return str;
+}
+
+const rta1 = aHackerSpeak();
+
+console.log(rta1);
