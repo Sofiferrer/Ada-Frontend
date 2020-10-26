@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html class="no-js" lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Se ingresan tres notas de un alumno, si el promedio es mayor 
+            o iguala siete mostrar el mensaje ‘Promocionado’ en caso de 
+            no superarlo, mostrar mensaje de No promocionado. 
+            Tener en cuenta que para obtener el promedio debemos operar 
+            suma=nota1+nota2+nota3; y luego hacer promedio=suma/3; -->
+
+    </head>
+    <body>
+        <button onclick="sacarPromedio();">Mostrar condición</button>
+        <script>
+            var nota1 = prompt ("Nota primer trimestre");
+            var nota2 = prompt ("Nota segundo trimestre");
+            var nota3 = prompt ("Nota tercer trimestre");
+            var sumaNotas= (parseInt(nota1)+parseInt(nota2)+parseInt(nota3));
+            var promedio= sumaNotas / 3;
+
+            function sacarPromedio () {
+                if (promedio>=7){
+                    document.write("Promedio: " + promedio + '<br>');
+                    document.write("Promocionado");
+                }
+                else {
+                    document.write("Promedio: " + promedio + '<br>');
+                    document.write("No promocionado");
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html class= "no-js" lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title></title>     
+        <meta name="description" content=""/>    
+        <meta name="keywords" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        
+        <script></script>
+        
+    </head>
+    <body>        
+        <script>    
+        
+         function obtener_cosas() {
+            fetch("https://www.themealdb.com/api/json/v1/1/categories.php", {
+
+                method: "get"
+            })
+                .then(response => response.json())
+                .then(json => guardarCategorias(json.categories)
+                )
+                .catch(function (err) { });
+        }
+
+        function guardarCategorias(data) {
+            var elementos = [];
+            data.forEach(datos => {
+                elementos.push(datos.id.categories)
+
+                console.log(datos)
+            })
+        }
+         
+
+         
+        </script>       
+        
+    </body>
+</html>  
