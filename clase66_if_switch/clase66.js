@@ -122,20 +122,17 @@ tieneMultasImpagas y pagoImpuestos, y devuelva true si una persona está habilit
 su carnet de conducir o false si no. Una persona puede renovar su carnet si pasó los tests, 
 no tiene multas impagas y pagó todos los impuestos*/
 
-const pasoTests = true
-const tieneMultasImpagas = true
-const pagoImpuestos = true
-
-
+const puedeRenovarCarnet = (pasoTests, tieneMultasImpagas, pagoImpuestos) => 
+    (pasoTests && pagoImpuestos && !tieneMultasImpagas);
   
-/*puedeRenovarCarnet(true, true, true)  // false
-puedeRenovarCarnet(true, true, false)   // false
-puedeRenovarCarnet(true, false, true)   // true
-puedeRenovarCarnet(true, false, false)  // false
-puedeRenovarCarnet(false, true, true)   // false
-puedeRenovarCarnet(false, true, false)  // false
-puedeRenovarCarnet(false, false, true)  // false
-puedeRenovarCarnet(false, false, false) // false*/
+/*console.log(puedeRenovarCarnet(true, true, true))  // false
+console.log(puedeRenovarCarnet(true, true, false))   // false
+console.log(puedeRenovarCarnet(true, false, true))   // true
+console.log(puedeRenovarCarnet(true, false, false))  // false
+console.log(puedeRenovarCarnet(false, true, true))   // false
+console.log(puedeRenovarCarnet(false, true, false))  // false
+console.log(puedeRenovarCarnet(false, false, true))  // false
+console.log(puedeRenovarCarnet(false, false, false)) // false*/
 
 
 /* 8) Crear una función puedeGraduarse que tome como argumentos dos números asistencia y 
@@ -221,19 +218,34 @@ const obtenerDiasMes = (mes) => {
     }
 }
 
-console.log(obtenerDiasMes("diciembre")) // 31
-console.log(obtenerDiasMes("febrero"))   // 29
+/*console.log(obtenerDiasMes("diciembre")) // 31
+console.log(obtenerDiasMes("febrero"))   // 29*/
 
 
 
 /* 13) Crear una función obtenerGeneracion que tome como argumento un número anioNacimiento 
 y devuelva un string con la generación a la que pertenece, siguientdo estas reglas:
 Baby boomer	   => 1949-1968
-Generación X   => 969-1980
+Generación X   => 1969-1980
 Millennials	   => 1981-1993
 Generación Z   => 1994-2010*/
 
+const anioNacimiento = (año) => {
+    switch (true) {
+        case (año)>=1949 && (año)<=1968: return "Baby boomer";
+        break;
+        case (año)>=1969 && (año)<=1980: return "Generacion X";
+        break;
+        case (año)>=1981 && (año)<=1993: return "Millennials";
+        break;
+        case (año)>=1994 && (año)<=2010: return "Generacion Z";
+    }
+}
 
+/*console.log(anioNacimiento(1960))
+console.log(anioNacimiento(1975))
+console.log(anioNacimiento(1989))
+console.log(anioNacimiento(2000))*/
 
 
 /* 14) Crear una función obtenerSensacion que tome como argumento un número temperatura y 
@@ -241,10 +253,28 @@ devuelva un string dependiendo de la temperatura, con las siguientes reglas:
 Menor a 0°	                                => ¡Está helando!
 Mayor o igual a 0° y menor a 15°	        => ¡Hace frío!
 Mayor o igual a 15° y menor a 25°	        => Está lindo
-Mayor o igual a entre 25° y menor a 30°	    => Hace calor
+Mayor o igual a 25° y menor a 30°	    => Hace calor
 Mayor o igual de 30°	                    => ¡Hace mucho calor!*/
 
+const obtenerSensacion = (temp) => {
+    switch (true) {
+        case (temp)<0: return "¡Está helando!";
+        break;
+        case (temp)>=0 && (temp)<15: return "¡Hace frío!";
+        break;
+        case (temp)>=15 && (temp)<25: return "Está lindo";
+        break;
+        case (temp)>=25 && (temp)<30: return "Hace calor";
+        break;
+        case (temp)>=30: return "¡Hace mucho calor!";
+    }
+}
 
+/*console.log(obtenerSensacion(-5))
+console.log(obtenerSensacion(10))
+console.log(obtenerSensacion(22))
+console.log(obtenerSensacion(28))
+console.log(obtenerSensacion(36))*/
 
 /* 15)Crear una función obtenerNota que tome como argumento un número puntaje y devuelva un 
 string dependiendo del puntaje redondeado, con las siguientes reglas:*/
