@@ -281,14 +281,42 @@ string dependiendo del puntaje redondeado, con las siguientes reglas:*/
 // Menor a 6	                        => Desaprobado
 // Mayor o igual a 6 y menor a 7	    => Regular
 // Mayor o igual a 7 y menor a 8	    => Bueno
-// Mayor o igual a entre 8 y menor a 10 => Muy bueno
+// Mayor o igual a 8 y menor a 10        => Muy bueno
 // 10	                                => Excelente
 // Menor a 0 o mayor a 10	            => Puntaje inválido
 
+const obtenerNota = (puntaje) => {
+    switch (true) {
+        case (puntaje)<6: return "Desaprobado";
+        break;
+        case (puntaje)>=6 && (puntaje)<7: return "Regular";
+        break;
+        case (puntaje)>=7 && (puntaje)<8: return "Bueno";
+        break;
+        case (puntaje)>=8 && (puntaje)<10: return "Muy Bueno";
+        break;
+        case (puntaje)==10: return "Excelente";
+        break;
+        default: return "Puntaje inválido";        
+    }
+}
+
+/*console.log(obtenerNota(3))
+console.log(obtenerNota(6))
+console.log(obtenerNota(7))
+console.log(obtenerNota(9))
+console.log(obtenerNota(10))
+console.log(obtenerNota(15))*/
 
 /* 16) Crear una función jugarPiedraPapelTijera que tome como argumentos dos strings a y b 
 que representen una jugada (piedra, papel, tijera) y dependiendo el devuelva un string con 
 un mensaje avisando qué jugada ganó (o si hubo empate)*/
+
+const jugarPiedraPapelTijera = (jugadaA, jugadaB) => {
+    let puntajeA = 0;
+    let puntajeB = 0;
+    if (jugadaA === "piedra" && jugadaB === "")
+}
 
 /*jugarPiedraPapelTijera('tijera', 'piedra')  // ¡Ganó piedra!
 jugarPiedraPapelTijera('piedra', 'tijera')  // ¡Ganó piedra!
