@@ -17,7 +17,7 @@ console.log(array2);*/
 /* 1) Crear una función obtenerMenor que tome como argumento un array de números numeros 
 y devuelva el menor de ellos. Ejemplo:*/
 
-const numeros = [5, 7, 99, 34, 54, 2, 12];
+//const numeros = [5, 7, 99, 34, 54, 2, 12];
 
 const obtenerMenor = (numeros) => {
     let menor = numeros[0];
@@ -34,7 +34,7 @@ const obtenerMenor = (numeros) => {
 /* 2) Crear una función sumar que tome como argumento un array de números numeros y 
 devuelva la suma de ellos. Ejemplo:*/
 
-const numeros = [5, 7, 10, 12, 24];
+//const numeros = [5, 7, 10, 12, 24];
 
 const sumarNumeros = (numeros) => {
     let suma = 0;
@@ -50,7 +50,7 @@ const sumarNumeros = (numeros) => {
 números y devuelva true o false dependiendo de si dicho numero se encuentra en el 
 array de numeros. Ejemplo:*/
 
-const numeros = [5, 7, 58, 69, 4, 6, 78, 10, 61, 2, 12, 47, 60, 24];
+//const numeros = [5, 7, 58, 69, 4, 6, 78, 10, 61, 2, 12, 47, 60, 24];
 
 const contiene = (numero, numeros) => (numeros.includes(numero));      
 
@@ -78,28 +78,58 @@ const invertirCaso = (str) => {
 /* 5) Crear una función separar que tome como argumento un string con emojis de perros y 
 gatos y devuelva un string con los perros agrupados por un lado y los gatos por otro. Ejemplo:*/
 
-/*const animales = "🐶🐱🐱🐶🐱🐶🐱🐱🐶🐶🐱🐶"*/
+const animales = "PGGPGPGGPPGP" 
+let perros = '';
+let gatos = '';
 
+const separar = (string) => {  
+    for (let letra of string) {
+        if (letra === 'P') {
+        perros += letra;
+        } else {
+        gatos += letra;
+        }
+    }
+    return perros + gatos;
+}
 
-/*console.log(separar(perrosYGatos));*/
+/*console.log(animales);
+console.log(separar(animales));*/
 
 
 /* 6) Crear una función gano que tome como argumento un array tragamonedas 
 con 5 símbolos y devuelva true si son iguales y false sino. 
 Si el array tiene más de 5 símbolos, sólo debe comparar los 5 primeros.*/
 
-
-
+const gano = (arreglo) => {
+    for (let i=0; i<4; i++) {
+        if (arreglo[i] !== arreglo[i + 1]) return 'Perdio';
+    }
+    return 'Gano!!';
+};
 
 /*console.log(gano(["⭐️", "⭐️", "⭐️", "💫", "✨"])); // false
 console.log(gano(["💫", "💫", "💫", "💫", "💫"])); // true
-console.log(gano(["💫", "💫", "💫", "💫", "💫", "⭐️"])); // true
+console.log(gano(["💫", "💫", "💫", "💫", "💫", "⭐️"])); // true*/
 
 // Aca pueden usar x, o */
 
 /* 7) Crear una función estanJuntos que tome como argumento un array de strings personajes, 
 y devuelva true si Sam se encuentra al lado de Frodo, ya sea antes o después, o false sino. Ejemplo:*/
 
-/*console.log(estanJuntos(["Sam", "Frodo", "Legolas"])); //true
-console.log(estanJuntos(["Aragorn", "Frodo", "Frodo"])); //true
-console.log(estanJuntos(["Sam", "Orco", "Frodo"])); //true*/
+const estanJuntos = (personajes) => {
+    let frodo = personajes.indexOf ('Frodo');
+    let sam = personajes.indexOf ('Sam');
+    for (i=0; i<personajes.length; i++) {
+        if (sam - frodo === -1 || sam - frodo === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }        
+}
+
+console.log(estanJuntos(["Sam", "Frodo", "Legolas"])); //true
+console.log(estanJuntos(["Aragorn", "Frodo", "Sam"])); //true
+console.log(estanJuntos(["Sam", "Orco", "Frodo"])); //false
+console.log(estanJuntos(["Legolas", "Orco", "Frodo", "Aragon"])); //false

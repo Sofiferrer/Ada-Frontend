@@ -313,20 +313,34 @@ que representen una jugada (piedra, papel, tijera) y dependiendo el devuelva un 
 un mensaje avisando qué jugada ganó (o si hubo empate)*/
 
 const jugarPiedraPapelTijera = (jugadaA, jugadaB) => {
-    let puntajeA = 0;
-    let puntajeB = 0;
-    if (jugadaA === "piedra" && jugadaB === "")
+    switch (true) {
+        case (jugadaA) === (jugadaB): return 'Empate!';
+        break;
+        case (jugadaA) === 'piedra' && (jugadaB) === 'tijera': return 'Gana Piedra!';
+        break;
+        case (jugadaA) === 'piedra' && (jugadaB) === 'papel': return 'Gana Papel!';
+        break;
+        case (jugadaA) === 'papel' && (jugadaB) === 'tijera': return 'Gana Tijera!';
+        break;
+        case (jugadaA) === 'papel' && (jugadaB) === 'piedra': return 'Gana Papel!';
+        break;
+        case (jugadaA) === 'tijera' && (jugadaB) === 'papel': return 'Gana Tijera!';
+        break;
+        case (jugadaA) === 'tijera' && (jugadaB) === 'piedra': return 'Gana Piedra!';
+        break;
+        default: return "Jugada inválida";        
+    }
 }
 
-/*jugarPiedraPapelTijera('tijera', 'piedra')  // ¡Ganó piedra!
-jugarPiedraPapelTijera('piedra', 'tijera')  // ¡Ganó piedra!
-jugarPiedraPapelTijera('papel', 'piedra')   // ¡Ganó papel!
-jugarPiedraPapelTijera('piedra', 'papel')   // ¡Ganó papel!
-jugarPiedraPapelTijera('papel', 'tijera')   // ¡Ganó tijera!
-jugarPiedraPapelTijera('tijera', 'papel')   // ¡Ganó tijera!
-jugarPiedraPapelTijera('piedra', 'piedra')  // ¡Empate!
-jugarPiedraPapelTijera('papel', 'papel')    // ¡Empate!
-jugarPiedraPapelTijera('tijera', 'tijera')  // ¡Empate!*/
+console.log(jugarPiedraPapelTijera('tijera', 'piedra'))  // ¡Ganó piedra!
+console.log(jugarPiedraPapelTijera('piedra', 'tijera'))  // ¡Ganó piedra!
+console.log(jugarPiedraPapelTijera('papel', 'piedra'))   // ¡Ganó papel!
+console.log(jugarPiedraPapelTijera('piedra', 'papel'))   // ¡Ganó papel!
+console.log(jugarPiedraPapelTijera('papel', 'tijera'))   // ¡Ganó tijera!
+console.log(jugarPiedraPapelTijera('tijera', 'papel'))   // ¡Ganó tijera!
+console.log(jugarPiedraPapelTijera('piedra', 'piedra'))  // ¡Empate!
+console.log(jugarPiedraPapelTijera('papel', 'papel'))    // ¡Empate!
+console.log(jugarPiedraPapelTijera('tijera', 'tijera'))  // ¡Empate!
 
 /* 17) Crear un programa que muestre el dinero inicial, y que permita retirar dinero preguntando 
 cuánto se desea retirar, y mostrando el dinero restante a continuación. Si se intenta retirar más 
