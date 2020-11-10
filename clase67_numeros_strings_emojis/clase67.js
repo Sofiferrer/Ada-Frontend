@@ -129,7 +129,7 @@ const estanJuntos = (personajes) => {
     }        
 }
 
-console.log(estanJuntos(["Sam", "Frodo", "Legolas"])); //true
+/*console.log(estanJuntos(["Sam", "Frodo", "Legolas"])); //true
 console.log(estanJuntos(["Aragorn", "Frodo", "Sam"])); //true
 console.log(estanJuntos(["Sam", "Orco", "Frodo"])); //false
-console.log(estanJuntos(["Legolas", "Orco", "Frodo", "Aragon"])); //false
+console.log(estanJuntos(["Legolas", "Orco", "Frodo", "Aragon"])); //false*/
