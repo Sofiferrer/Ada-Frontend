@@ -142,17 +142,25 @@ const capitalizarPalabras = (str) => {
     return nuevoString;
 }
 
-console.log(capitalizarPalabras("Esto es un título")); // 'Esto Es Un Título'
+/*console.log(capitalizarPalabras("Esto es un título")); // 'Esto Es Un Título'
 console.log(capitalizarPalabras("había una vez")); // 'Había Una Vez'
-console.log(capitalizarPalabras("OMG")); // 'OMG'
+console.log(capitalizarPalabras("OMG")); // 'OMG'*/
 
 /* 9) Crear una función sumarSeccion que tome como argumento un array de números enteros array, 
 un número entero comienzo y un número entero cantidad, y que devuelva la suma de cantidad de 
 números de array empezando a contar desde el ítem con índice comienzo.*/
 
-/*sumarSeccion([2, 2, 4, 3, 10, 20, 5], 0, 3); // 8 (2 + 2 + 4 = 8)
+const sumarSeccion = (array, comienzo, cantidad) => {    
+    let sumador = 0;
+        for (i=comienzo; i=array[comienzo + cantidad]; i++) {
+            sumador = sumador + [i];
+        }        
+    return sumador;
+}
+
+sumarSeccion([2, 2, 4, 3, 10, 20, 5], 0, 3); // 8 (2 + 2 + 4 = 8)
 sumarSeccion([2, 2, 4, 3, 10, 20, 5], 2, 4); // 37 (4 + 8 + 10 + 20 = 37)
-sumarSeccion([2, 2, 4, 3, 10, 20, 5], 4, 1); // 3*/
+sumarSeccion([2, 2, 4, 3, 10, 20, 5], 4, 1); // 3
 
 
 /* 10) Crear una función esSubconjunto que tome como argumento dos arrays, subconjunto y conjunto, 
