@@ -94,9 +94,9 @@ const traerElMas = (prop,esMayor = true) => {
         let {[prop] : propiedad} = habitant;
         let {[prop] : propiedadMas} = elMas;
         if (esMayor && propiedad > propiedadMas) {
-            propiedadMas = habitant[i];
+            propiedadMas = habitant;
         }else if(!esMayor && propiedad < propiedadMas){
-            propiedadMas = habitant[i];
+            propiedadMas = habitant;
         }
     }
     return elMas;

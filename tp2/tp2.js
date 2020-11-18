@@ -23,10 +23,27 @@ var local = {
   ]
 };
 
+const { vendedoras, ventas, precios } = local;
+
+//nombreVendedoraconst {fecha, nombreVendedora, componentes} = ventas;
+//console.log(ventas[2].componentes);
+
 /*1) precioMaquina(componentes): recibe un array de componentes y devuelve el precio de la máquina 
 que se puede armar con esos componentes, que es la suma de los precios de cada componente incluido.*/
 
-/*console.log( precioMaquina(["Monitor GPRS 3000", "Motherboard ASUS 1500"]) ); */
+const precioMaquina = (componentes) => {
+  let precioTotal = 0;
+  for (elemento of precios) {
+    for (comp of componentes) {
+      if (elemento.componente === comp) {
+        precioTotal = precioTotal + elemento.precio;
+      }
+    }    
+  }
+  return precioTotal;
+}  
+
+//console.log(precioMaquina(["Monitor GPRS 3000", "Motherboard ASUS 1500"]));
 // 320 ($200 del monitor + $120 del motherboard)
 
 
@@ -34,36 +51,165 @@ que se puede armar con esos componentes, que es la suma de los precios de cada c
 o sea que formó parte de una máquina que se vendió. La lista de ventas no se pasa por parámetro, 
 se asume que está identificada por la variable ventas.*/
 
-//console.log( cantidadVentasComponente("Monitor ASC 543") ); // 2
+const cantidadVentasComponente = (componente) => {
+  let totalVentas = 0;
+  for (venta of ventas) {
+    for (i=0; i<venta.componentes.length; i++) {
+      if (venta.componentes[i] === componente) {
+        totalVentas++;
+      }
+    }
+  }
+  return totalVentas;
+}
+
+//console.log(cantidadVentasComponente("Monitor ASC 543")) // 2
+
+/*3) vendedoraDelMes(mes, anio), se le pasa dos parámetros numéricos, (mes, anio) y devuelve el nombre de la vendedora que más vendió en plata en el mes. O sea no cantidad de ventas, sino importe total de las ventas. El importe de una venta es el que indica la función precioMaquina. El mes es un número entero que va desde el 1 (enero) hasta el 12 (diciembre).*/
+
+/*const vendedoraDelMes = (mes, anio) => {
+  //let mejorVenta = 0;
+  let ventasVendedoras = {};
+  
+  for (vendedora of vendedoras) {
+    for (venta of ventas) {
+      const month = venta.fecha.getMonth();
+      const year = venta.fecha.getFullYear();
+      let valorVenta = precioMaquina(venta.componentes);
+      
+      if (month+1 === mes && year === anio && (venta.nombreVendedora === vendedora)) {
+        if(ventasVendedoras[vendedora]) {
+          ventasVendedoras[vendedora] = ventasVendedoras[vendedora] + valorVenta;
+        } else {
+          ventasVendedoras[vendedora] = valorVenta;
+        }
+        
+      }
+    }
+  }
+  
+  return ventasVendedoras;
+} 
+
+//console.log(vendedoraDelMes(1, 2019));*/
+
+/*const agregarValorVenta = () => {
+  for (i=0; i<ventas.length; i++) { 
+    valorMaquina = precioMaquina(ventas[i].componentes);  
+  ventas[i].valorVenta = valorMaquina;
+  } 
+}*/
+//  --PRIMERA RESOLUCION, larga y enredada pero funciona--
 
 
-/*3) vendedoraDelMes(mes, anio), se le pasa dos parámetros numéricos, (mes, anio) y devuelve el nombre 
-de la vendedora que más vendió en plata en el mes. O sea no cantidad de ventas, sino importe total de las ventas. 
-El importe de una venta es el que indica la función precioMaquina. 
-El mes es un número entero que va desde el 1 (enero) hasta el 12 (diciembre).*/
+const vendedoraDelMes = (mes, anio) => {
+  let ventasVendedoras = {}; // este objeto debe devolver el valor de las ventas de cada vendedora.
+  let mayorVenta = 0;
+  for (i=0; i<ventas.length; i++) { 
+      valorMaquina = precioMaquina(ventas[i].componentes);  
+    ventas[i].valorVenta = valorMaquina;
+  } // este 'for' me suma la prop 'valorventa' a cada venta.
+  for (vendedora of vendedoras) {
+    for (venta of ventas) {
+      let month = venta.fecha.getMonth();
+      let year = venta.fecha.getFullYear();
+  
+      if ((venta.nombreVendedora === vendedora) && (month+1 === mes) && (year === anio)) {
+        if(ventasVendedoras[vendedora]) {
+          ventasVendedoras[vendedora] = ventasVendedoras[vendedora] + venta.valorVenta;
+        } else {
+          ventasVendedoras[vendedora] = venta.valorVenta;
+        }
+      }
+    }
+  }
+  for (vendedora in ventasVendedoras) {   
+    if (ventasVendedoras[vendedora] > mayorVenta){
+      mayorVenta = vendedora;
+    }
+  }
+  //console.log(ventasVendedoras);
+  return mayorVenta;
+}
 
-//console.log( vendedoraDelMes(1, 2019) ); // "Ada" (vendio por $670, una máquina de $320 y otra de $350)
+console.log(vendedoraDelMes(1, 2019)); // "Ada" (vendio por $670, una máquina de $320 y otra de $350)
+//local.ventas = agregarValorVenta();
+//console.log(ventas);
 
 
-/*4) ventasMes(mes, anio): Obtener las ventas de un mes. El mes es un número entero que va desde el 1 
-(enero) hasta el 12 (diciembre).*/
+/*4) ventasMes(mes, anio): Obtener las ventas de un mes. El mes es un número entero que va desde el 1 (enero) hasta el 12 (diciembre).*/
+
+const ventasMes = (mes, anio) => {
+  let ventasDelMes = 0;
+  for (venta of ventas) {
+    let month = venta.fecha.getMonth();
+    let year = venta.fecha.getFullYear();
+
+    if ((month+1 === mes) && (year === anio)) {
+      ventasDelMes = ventasDelMes + venta.valorVenta;
+    }
+  }
+  return ventasDelMes;
+}
 
 //console.log( ventasMes(1, 2019) ); // 1250
 
 
 /*5) ventasVendedora(nombre): Obtener las ventas totales realizadas por una vendedora sin límite de fecha.*/
 
-//console.log( ventasVendedora("Grace") ); // 900
+const ventasVendedora = (nombre) => {
+  let ventasxVendedora = 0;
+  
+    for (venta of ventas) {  
+      if (venta.nombreVendedora === nombre) {
+        ventasxVendedora = ventasxVendedora + venta.valorVenta;
+      }
+    }  
+  return ventasxVendedora;
+}
 
+//console.log(ventasVendedora("Grace")); // 900
 
 /*6) componenteMasVendido(): Devuelve el nombre del componente que más ventas tuvo historicamente. 
 El dato de la cantidad de ventas es el que indica la función cantidadVentasComponente*/
+
+const componenteMasVendido = () => {
+  let componentesVendidos = {};
+  let masVendido = 0;
+  for (venta of ventas) {
+    for (i=0; i<venta.componentes.length; i++) {
+      if(componentesVendidos[venta.componentes[i]]) {
+        componentesVendidos[venta.componentes[i]]++;
+      } else {
+        componentesVendidos[venta.componentes[i]] = 1;
+      }      
+    }    
+  }
+  for (comp in componentesVendidos) {   
+    if (componentesVendidos[comp] > masVendido){
+      masVendido = comp;
+    }
+  }
+  return masVendido;
+}
 
 //console.log( componenteMasVendido() ); // Monitor GPRS 3000
 
 
 /*7)huboVentas(mes, anio): que indica si hubo ventas en un mes determinado. 
 El mes es un número entero que va desde el 1 (enero) hasta el 12 (diciembre).*/
+
+const huboVentas = (mes, anio) => {
+  for (venta of ventas) {
+    let month = venta.fecha.getMonth();
+    let year = venta.fecha.getFullYear();
+    if ((month+1 === mes) && (year === anio)) {
+      return true;
+    }
+  }
+  return false;
+} 
+
 
 //console.log( huboVentas(3, 2019) ); // false
 

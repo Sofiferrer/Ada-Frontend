@@ -174,17 +174,17 @@ const obtenerVolumenes = () => {
 }
 
 const obtenerMayorVolumen = () => {
-    let volumen2 = obtenerVolumenes();
-    let mayorVolumen = volumen2[0]; //preguntar al profe por que sirve habitants[0]
+    let habitantes = obtenerVolumenes();
+    let mayorVolumen = habitantes[0]; //preguntar al profe por que sirve habitants[0]
 
-    for (let i=0; i<volumen2.length - 1; i++){
-        if (volumen2[i + 1].volumen > mayorVolumen.volumen){
-            mayorVolumen = volumen2[i + 1];
+    for (let i=0; i<habitantes.length - 1; i++){
+        if (habitantes[i + 1].volumen > mayorVolumen.volumen){
+            mayorVolumen = habitantes[i + 1];
             }
     }
     return mayorVolumen;
 }
 
-/*habitants = obtenerVolumenes();
-console.log(traerElMas("volumen"));
-console.log(obtenerMayorVolumen())*/
+//habitants = obtenerVolumenes();
+//console.log(traerElMas("volumen"));
+console.log(obtenerMayorVolumen())
