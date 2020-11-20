@@ -175,7 +175,7 @@ const obtenerVolumenes = () => {
 
 const obtenerMayorVolumen = () => {
     let habitantes = obtenerVolumenes();
-    let mayorVolumen = habitantes[0]; //preguntar al profe por que sirve habitants[0]
+    let mayorVolumen = habitantes[0];
 
     for (let i=0; i<habitantes.length - 1; i++){
         if (habitantes[i + 1].volumen > mayorVolumen.volumen){
