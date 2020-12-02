@@ -43,7 +43,16 @@ const precioMaquina = (componentes) => {
   return precioTotal;
 }  
 
-console.log(precioMaquina(["Monitor GPRS 3000", "Motherboard ASUS 1500"]));
+const agregarValorVenta = () => {
+  for (i=0; i<ventas.length; i++) { 
+    valorMaquina = precioMaquina(ventas[i].componentes);  
+  ventas[i].valorVenta = valorMaquina;
+  } 
+  return local.ventas;
+}
+local.ventas = agregarValorVenta();
+
+//console.log(precioMaquina(["Monitor GPRS 3000", "Motherboard ASUS 1500"]));
 // 320 ($200 del monitor + $120 del motherboard)
 
 
@@ -63,45 +72,78 @@ const cantidadVentasComponente = (componente) => {
   return totalVentas;
 }
 
-console.log(cantidadVentasComponente("Monitor ASC 543")) // 2
+//console.log(cantidadVentasComponente("Monitor ASC 543")) // 2
 
 /*3) vendedoraDelMes(mes, anio), se le pasa dos parámetros numéricos, (mes, anio) y devuelve el nombre de la vendedora que más vendió en plata en el mes. O sea no cantidad de ventas, sino importe total de las ventas. El importe de una venta es el que indica la función precioMaquina. El mes es un número entero que va desde el 1 (enero) hasta el 12 (diciembre).*/
 
+const filtroFecha = (mes, anio) => {
+  const ventasFiltradas = [];
+  for (venta of ventas) {
+    const month = venta.fecha.getMonth();
+    const year = venta.fecha.getFullYear();
+    if (month+1 === mes && year === anio) {
+      ventasFiltradas.push(venta);
+    }
+  }
+  return ventasFiltradas;
+}
+
+const filtroVendedoras = (nombre, ventas) => {
+  const ventasFiltradas = [];
+  for (venta of ventas) {
+    if (venta.nombreVendedora === nombre) {
+      ventasFiltradas.push(venta);
+    }
+  }
+  return ventasFiltradas;
+}
+
+const totalVendido = (ventas) => {
+  let totalVendido = 0;
+  for (venta of ventas) {
+    totalVendido = totalVendido + venta.valorVenta;
+  }
+  return totalVendido;
+}
+
+const ventasDelMesPor = (mes,anio,vendedorArray,filtro) =>{
+  let vendedoraMes = 0;
+  let nombre = "";
+  const ventasXmes = filtroFecha(mes, anio);
+
+  for (vendedora of vendedorArray) {
+    const ventasPorVendedora = filtro(vendedora,ventasXmes);
+    let totalVentas = totalVendido(ventasPorVendedora);
+    if (totalVentas > vendedoraMes) {
+      vendedoraMes = totalVentas;
+      nombre = vendedora;
+    }    
+  }
+  return nombre;
+}
+/*
+const vendedoraDelMes = (mes, anio) => {
+  return ventasDelMesPor(mes,anio,vendedoras,filtroVendedoras);
+} */
+
 const vendedoraDelMes = (mes, anio) => {
   let vendedoraMes = 0;
-  let ventasVendedorasMes = {};  
-  for (vendedora of vendedoras) {
-    for (venta of ventas) {
-      const month = venta.fecha.getMonth();
-      const year = venta.fecha.getFullYear();
-      let valorVenta = precioMaquina(venta.componentes);      
-      if (month+1 === mes && year === anio && (venta.nombreVendedora === vendedora)) {
-        if(ventasVendedorasMes[vendedora]) {
-          ventasVendedorasMes[vendedora] = ventasVendedorasMes[vendedora] + valorVenta;
-        } else {
-          ventasVendedorasMes[vendedora] = valorVenta;
-        }        
-      }
-    }
-  }
-  for (item in ventasVendedorasMes) {   
-    if (ventasVendedorasMes[item] > vendedoraMes){
-      vendedoraMes = item;
-    }
-  }
-  return vendedoraMes;
-} 
+  let nombre = "";
+  const ventasXmes = filtroFecha(mes, anio);
 
+  for (vendedora of vendedoras) {
+    const ventasPorVendedora = filtroVendedoras(vendedora,ventasXmes);
+    let totalVentas = totalVendido(ventasPorVendedora);
+    if (totalVentas > vendedoraMes) {
+      vendedoraMes = totalVentas;
+      nombre = vendedora;
+    }    
+  }
+  return nombre;
+} 
 console.log(vendedoraDelMes(1, 2019));
 
-const agregarValorVenta = () => {
-  for (i=0; i<ventas.length; i++) { 
-    valorMaquina = precioMaquina(ventas[i].componentes);  
-  ventas[i].valorVenta = valorMaquina;
-  } 
-  return local.ventas;
-}
-local.ventas = agregarValorVenta();
+
 
 //  --PRIMERA RESOLUCION, larga y enredada pero funciona--
 
@@ -151,19 +193,14 @@ const ventasMes = (mes, anio) => {
   return ventasDelMes;
 }
 
-console.log( ventasMes(1, 2019) ); // 1250
+//console.log( ventasMes(1, 2019) ); // 1250
 
 
 /*5) ventasVendedora(nombre): Obtener las ventas totales realizadas por una vendedora sin límite de fecha.*/
 
 const ventasVendedora = (nombre) => {
-  let ventasxVendedora = 0;  
-    for (venta of ventas) {  
-      if (venta.nombreVendedora === nombre) {
-        ventasxVendedora = ventasxVendedora + venta.valorVenta;
-      }
-    }  
-  return ventasxVendedora;
+  const ventasVendedora = filtroVendedoras(nombre, ventas);
+  return totalVendido(ventasVendedora);
 }
 
 console.log(ventasVendedora("Grace")); // 900
@@ -210,7 +247,7 @@ const componenteMasVendido = () => {
   return masVendido;
 }*/
 
-console.log( componenteMasVendido() ); // Monitor GPRS 3000
+//console.log( componenteMasVendido() ); // Monitor GPRS 3000
 
 
 /*7)huboVentas(mes, anio): que indica si hubo ventas en un mes determinado. 
@@ -228,7 +265,7 @@ const huboVentas = (mes, anio) => {
 } 
 
 
-console.log( huboVentas(3, 2019) ); // false
+//console.log( huboVentas(3, 2019) ); // false
 
 
 //------------------------------------------------------------------------------------------------------------------
@@ -316,23 +353,11 @@ const ventasSucursal = (sucursal) => {
   }
   return ventasXsucursal
 }
-console.log( ventasSucursal("Centro") ); // 4195
+//console.log( ventasSucursal("Centro") ); // 4195
 
 /*5) Las funciones ventasSucursal y ventasVendedora tienen mucho código en común, 
 ya que es la misma funcionalidad pero trabajando con una propiedad distinta. 
 Entonces, ¿cómo harías para que ambas funciones reutilicen código y evitemos repetir?*/
-
-/*const ventasSegunParametro = (valor) => {
-  let ventasXparametro = 0;
-  const {nombreVendedora, sucursal} = ventas;
-  for (venta of ventas) {    
-    if (sucursal === valor) {
-      ventasXparametro = ventasXparametro + venta.valorVenta;
-    }   
-  }
-  return ventasXparametro;
-}
-console.log(ventasSegunParametro('Centro'))*/
 
 const ventasSegunParametro = (parametro) => {
   let ventasXparametro = 0;
@@ -343,36 +368,42 @@ const ventasSegunParametro = (parametro) => {
   }
   return ventasXparametro;
 }
-console.log(ventasSegunParametro('Hedy'));
+//console.log(ventasSegunParametro('Hedy'));
 /*6) Crear la función sucursalDelMes(mes, anio), que se le pasa dos parámetros numéricos, 
 (mes, anio) y devuelve el nombre de la sucursal que más vendió en plata en el mes. 
 No cantidad de ventas, sino importe total de las ventas. 
 El importe de una venta es el que indica la función precioMaquina. 
 El mes es un número entero que va desde el 1 (enero) hasta el 12 (diciembre).*/
+const filtroSucursal = (sucursal,ventas) =>{
+  const ventasFiltradas = [];
+  for (venta of ventas) {
+    if (venta.sucursal === sucursal) {
+      ventasFiltradas.push(venta);
+    }
+  }
+  return ventasFiltradas;
+}
 
 const sucursalDelMes = (mes, anio) =>{
-  let ventasSucursales = {};
-  let mejorSucursal = 0;
+  let sucursalMes = 0;
+  let nombre = "";
+  const ventasXmes = filtroFecha(mes, anio);
+
   for (sucursal of sucursales) {
-    for (venta of ventas) {
-      const month = venta.fecha.getMonth();
-      const year = venta.fecha.getFullYear();           
-      if (month+1 === mes && year === anio && (venta.sucursal === sucursal)) {
-        if(ventasSucursales[sucursal]) {
-          ventasSucursales[sucursal] = ventasSucursales[sucursal] + venta.valorVenta;
-        } else {
-          ventasSucursales[sucursal] = venta.valorVenta;
-        }        
-      }
-    }
+    const ventasPorSucursal = filtroSucursal(sucursal,ventasXmes);
+    let totalVentas = totalVendido(ventasPorSucursal);
+    if (totalVentas > sucursalMes) {
+      sucursalMes = totalVentas;
+      nombre = sucursal;
+    }    
   }
-  for (valor in ventasSucursales) {   
-    if (ventasSucursales[valor] > mejorSucursal){
-      mejorSucursal = valor;
-    }
-  }
-  return mejorSucursal;
+  return nombre;
 }
+
+/*const sucursalDelMes = (mes, anio) =>{
+  return ventasDelMesPor(mes,anio,sucursales,filtroSucursal);
+}*/
+
 
 console.log( sucursalDelMes(1, 2019) ); // "Centro"
 
@@ -387,20 +418,17 @@ Para esto, necesitamos crear las siguientes funciones:*/
 const renderPorMes = () => {
   let ventasMes = {};
   for (venta of ventas) {
-    const month = venta.fecha.getMonth();
-    const year = venta.fecha.getFullYear();           
-      
+    const month = venta.fecha.getMonth();      
         if(ventasMes[month]) {
           ventasMes[month] = ventasMes[month] + venta.valorVenta;
         } else {
           ventasMes[month] = venta.valorVenta;
-        }
-      
+        }      
   }
   return `Total ventas Enero 2019: ${ventasMes[0]}    ||    Total ventas Febrero 2019: ${ventasMes[1]}`;
 }
 
-console.log( renderPorMes() );
+//console.log( renderPorMes() );
 // Ventas por mes:
 //   Total de enero 2019: 1250
 //   Total de febrero 2019: 4210
@@ -424,7 +452,7 @@ const renderPorSucursal = () => {
   return `Total ventas Centro: ${ventasSucursal['Centro']}    ||    Total ventas Caballito: ${ventasSucursal['Caballito']}`;
 }
 
-console.log( renderPorSucursal() );
+//console.log( renderPorSucursal() );
 // Ventas por sucursal:
 //   Total de Centro: 4195
 //   Total de Caballito: 1265
@@ -459,25 +487,23 @@ console.log( render() );*/
   console.log(ventasVendedoras);
 } 
 console.log(mejorVendedora());*/
-const mejorVendedora = () => {
-  let ventasVendedoras = [];
 
-    for (i=0; i<vendedoras.length; i++) {
-        ventasXVendedora = {
-            nombre: vendedoras[i],
-            valor: 0,
-        }
-        ventasXVendedora.valor = ventasXVendedora.valor + ventasVendedora(vendedoras[i]);
-        ventasVendedoras.push(ventasXVendedora);
-      }
-  let mejorVendedora = ventasVendedoras[0];
-  for (let i=0; i<ventasVendedoras.length-1; i++) {
-    if (ventasVendedoras[i+1].valor > mejorVendedora.valor){
-      mejorVendedora = ventasVendedoras[i+1];
-    }
+
+const mejorVendedora = () => {
+  let mejorVendedora = 0;
+  let nombre = "";
+
+  for (vendedora of vendedoras) {
+    const ventasPorVendedora = filtroVendedoras(vendedora,ventas);
+    let totalVentas = totalVendido(ventasPorVendedora);
+    if (totalVentas > mejorVendedora) {
+      mejorVendedora = totalVentas;
+      nombre = vendedora;
+    }    
   }
-  return mejorVendedora.nombre;
+  return nombre;
 }
+console.log(mejorVendedora());
 
 const render = () => {  
   const ventasXmes = renderPorMes();
@@ -491,7 +517,7 @@ const render = () => {
   render.vendedoraEstrella = vendedoraEstrella;
   return render;
 }
-console.log(render());
+//console.log(render());
 
 
 // Reporte
