@@ -1,32 +1,30 @@
 const base = "https://ada-frontend-1d227-default-rtdb.firebaseio.com/"
 
-const init = () => {
-    fetch(`${base}users.json`)
-        .then(response => response.json())
-        .then(data => {
-            createTable(data);
-        })
+const init = () =>{
+    fetch(`${base}pets.json`)
+    .then(response => response.json())
+    .then(data => {
+        createTable(data);
+    })
 };
 init();
 
 const eliminar = (id) => {
     console.log("se elmino al id:", id)
-    fetch(`${base}users/${id}.json`, {
-        method: "DELETE"
+    fetch(`${base}pets/${id}.json`, {
+    method: "DELETE"
     }).then((response) => {
-        console.log(response);
-        return response.json()
+    console.log(response);
+    return response.json()
     }).then((data) => {
-        console.log(data)
+    console.log(data)
     }).then(init);
 }
 
 
-
-
 const createTable = (data) => {
     const tbody = document.getElementById("tbody");
-    tbody.innerHTML = "";
+    tbody.innerHTML="";
     for (let object in data) {
 
         const tr = document.createElement('tr');
@@ -49,7 +47,7 @@ const createTable = (data) => {
 
         const botonEditar = document.createElement('button');
         botonEditar.addEventListener('click', () => {
-            window.location = `detail.html?name=${object}`;
+            console.log(object);
         });
         botonEditar.innerText = 'Editar';
         botonEditar.setAttribute('class', 'btn btn-warning');

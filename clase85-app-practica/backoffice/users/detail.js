@@ -1,28 +1,75 @@
+const url = new URL(window.location)
+const id = url.searchParams.get('name');
+console.log(id);
+
+const base = "https://ada-frontend-1d227-default-rtdb.firebaseio.com/"
+
+const inputName = document.getElementById("name");
+const inputEmail = document.getElementById("email");
+const inputClave = document.getElementById("clave");
+
 const agregarUsuario = (event) => {
     event.preventDefault();
-    const name = document.getElementById("name");
-    const email = document.getElementById("email");
-    const clave = document.getElementById("clave");
 
     const user = {
-        name: name.value,
-        email: email.value,
-        password: clave.value,
+        name: inputName.value,
+        email: inputEmail.value,
+        password: inputClave.value,
     }
-    
-    fetch("https://ada-frontend-1d227-default-rtdb.firebaseio.com/users.json", {
-    method: "POST",
-    headers: {
-        'Content-Type': 'Application/json'
-    },
-    body: JSON.stringify(user),
+
+    fetch(`${base}users.json`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'Application/json'
+        },
+        body: JSON.stringify(user),
     }).then((response) => {
-    console.log(response);
-    return response.json()
+        console.log(response);
+        return response.json()
     }).then((data) => {
-    console.log(data)
+        console.log(data)
     })
 }
 
+const editarUsuario = (event) => {
+    event.preventDefault();
+
+    const user = {
+        name: inputName.value,
+        email: inputEmail.value,
+        password: inputClave.value,
+    }
+
+    fetch(`${base}users/${id}.json`, {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'Application/json'
+        },
+        body: JSON.stringify(user),
+    }).then((response) => {
+        return response.json()
+    }).then((data) => {
+        console.log(data)
+    })
+}
+
+const cargarForm = (id) => {
+    fetch(`${base}users/${id}.json`)
+        .then((response) => {
+            return response.json()
+        }).then((data) => {
+            inputName.value = data.name
+            inputEmail.value = data.email
+            inputClave.value = data.password
+        })
+}
+
 const boton = document.getElementById("agregar");
-boton.addEventListener('click', agregarUsuario);
+
+if (id) {
+    boton.innerHTML = "Actualizar";
+    cargarForm(id);
+    boton.addEventListener('click', editarUsuario);
+} else {
+    boton.addEventListener('click', agregarUsuario);
+}

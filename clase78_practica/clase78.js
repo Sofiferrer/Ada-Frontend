@@ -259,20 +259,25 @@ const barra = () => {
     document.body.appendChild(contenedor);
     contenedor.appendChild(barra);
     
-    const aumentar = (key) => {        
-        porcentaje = porcentaje + 10;
-        barra.style.width = `${porcentaje}%`;
-        barra.textContent = `${porcentaje}%`;
-        if (key.keyCode == '39') {
+    const aumentar = (key) => { 
+        if (porcentaje <= 90) {
+            porcentaje = porcentaje + 10;
+            barra.style.width = `${porcentaje}%`;
+            barra.textContent = `${porcentaje}%`;
+            if (key.keyCode == '39') {
             aumentar();
-        }        
+            } 
+        }                      
     }
-    const reducir = (key) => {         
-        porcentaje = porcentaje - 10;
-        barra.style.width = `${porcentaje}%`;
-        barra.textContent = `${porcentaje}%`;   
-        if (key.keyCode == '37') {
+
+    const reducir = (key) => {   
+        if (porcentaje >= 10) {
+            porcentaje = porcentaje - 10;
+            barra.style.width = `${porcentaje}%`;
+            barra.textContent = `${porcentaje}%`;   
+            if (key.keyCode == '37') {
             reducir();
+            }
         }            
     }
     
@@ -375,6 +380,36 @@ const scroll = () => {
 
 // Crear un documento html con al menos 4 imágenes chicas (100px de alto) y una imagen grande (500px de alto). Cuando se clickean las imágenes chicas, la imagen grande se tiene que actualizar con la misma que la imagen chica clickeada.
 
+/*const imagenes = () => {
+    const imagenGrande = document.createElement('img');
+    imagenGrande.setAttribute('src', 'https://cdn.pixabay.com/photo/2017/08/30/12/45/girl-2696947__340.jpg');
+    imagenGrande.style.height = '500px';
+    
+    const imagenUno = document.createElement('img');
+    imagenUno.setAttribute('src', 'https://cdn.pixabay.com/photo/2017/11/29/09/15/paint-2985569__340.jpg')
+    imagenUno.style.height = '100px';
+    const imagenDos = document.createElement('img');
+    imagenDos.setAttribute('src', 'https://cdn.pixabay.com/photo/2017/12/01/08/02/paint-2990357__340.jpg')
+    imagenDos.style.height = '100px';
+    const imagenTres = document.createElement('img');
+    imagenTres.setAttribute('src', 'https://cdn.pixabay.com/photo/2018/01/19/13/02/picture-3092374__340.jpg')
+    imagenTres.style.height = '100px';
+    const imagenCuatro = document.createElement('img');
+    imagenCuatro.setAttribute('src', 'https://cdn.pixabay.com/photo/2017/11/28/12/39/makeup-2983550__340.jpg')
+    imagenCuatro.style.height = '100px';    
+    
+    document.body.appendChild(imagenUno);
+    document.body.appendChild(imagenDos);
+    document.body.appendChild(imagenTres);
+    document.body.appendChild(imagenCuatro);
+    document.body.appendChild(imagenGrande);
+
+    const cambioImg = (url) => {
+        imagenGrande.setAttribute('src', `${url}`)
+    }
+    
+}
+imagenes();*/
 
 // Repetir el ejercicio anterior, pero en vez de cambiar la imagen grande cuando se clickean las imágenes chicas, hacerlo cuando se pasa el mouse por encima de las imágenes chicas.
 
@@ -383,8 +418,31 @@ const scroll = () => {
 
 // Crear un documento html con 12 imágenes de posters de películas. Buscar imágenes de películas de 3 géneros (acción, aventura, ciencia ficción, comedia, etc), 4 películas por género. Agregar al documento un botón por cada género, y un botón que diga Todas. Cuando se clickea el botón de un género, se tienen que mostrar sólo las películas correspondientes a ese género. Cuando se clickea el botón Todas se tienen que mostrar todas las películas.
 
+/*const peliculas = () => {
+    const accion = document.createElement('button');
+    accion.setAttribute('class', 'accion');
+    accion.innerHTML = 'ACCION';
+    const romance = document.createElement('button');
+    romance.setAttribute('class', 'romance');
+    romance.innerHTML = 'ROMANCE';
+    const comedia = document.createElement('button');
+    comedia.setAttribute('class', 'comedia');
+    comedia.innerHTML = 'COMEDIA';
+    const todas = document.createElement('button');
+    todas.setAttribute('class', 'todas');
+    todas.innerHTML = 'TODAS';
 
+    document.body.appendChild(accion);
+    document.body.appendChild(romance);
+    document.body.appendChild(comedia);
+    document.body.appendChild(todas);
 
+    const cargarAccion = () => {
+        const imgUno = document.createElement('img');
+        imgUno.setAttribute('src', 'https://i.pinimg.com/236x/e3/dd/8f/e3dd8f89cfd80c35c273d7db31968675.jpg')
+    }
+}
+peliculas();*/
 
 // En un documento html crear botones con números del 0 al 9, un botón para reiniciar, un botón para borrar, y un elemento de texto. 
 //- Cuando se presionan los botones de números, se tienen que ir agregando los números en el elemento de texto. Por ejemplo, si se presiona el 1 y después el 3, se tiene que mostrar "13".
