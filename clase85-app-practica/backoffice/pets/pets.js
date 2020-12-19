@@ -1,59 +1,60 @@
 const base = "https://ada-frontend-1d227-default-rtdb.firebaseio.com/"
 
-const init = () =>{
+//funcion init inicializa la carga de datos
+const init = () => {
     fetch(`${base}pets.json`)
-    .then(response => response.json())
-    .then(data => {
-        createTable(data);
-    })
-};
+        .then(response => response.json())
+        .then(data => {
+            createTable(data);
+        });
+}
 init();
 
 const eliminar = (id) => {
-    console.log("se elmino al id:", id)
+    console.log(id);
     fetch(`${base}pets/${id}.json`, {
-    method: "DELETE"
+        method: 'DELETE'
     }).then((response) => {
-    console.log(response);
-    return response.json()
+        return response.json()
     }).then((data) => {
-    console.log(data)
+        console.log(data)
     }).then(init);
 }
 
 
-const createTable = (data) => {
-    const tbody = document.getElementById("tbody");
-    tbody.innerHTML="";
-    for (let object in data) {
 
+//data i get from FETCH
+const createTable = (data) => {
+
+    const tbody = document.getElementById('pets-list')
+    tbody.innerHTML = "";
+    for (let object in data) {
         const tr = document.createElement('tr');
         for (let item in data[object]) {
-            console.log(item);
             const td = document.createElement('td');
             td.innerHTML = data[object][item];
             tr.appendChild(td);
         }
-
         const botonEliminar = document.createElement('button');
+        botonEliminar.innerHTML = 'Eliminar';
+        const colEliminar = document.createElement('td');
+        botonEliminar.setAttribute('class', 'btn btn-danger');
         botonEliminar.addEventListener('click', () => {
             eliminar(object);
-        });
-        botonEliminar.innerText = 'Eliminar';
-        botonEliminar.setAttribute('class', 'btn btn-danger');
-        const tdElim = document.createElement('td');
-        tdElim.appendChild(botonEliminar);
-        tr.appendChild(tdElim);
+        })
+        colEliminar.appendChild(botonEliminar);
+        tr.appendChild(colEliminar);
 
         const botonEditar = document.createElement('button');
-        botonEditar.addEventListener('click', () => {
-            console.log(object);
-        });
-        botonEditar.innerText = 'Editar';
+        botonEditar.innerHTML = 'Editar';
+        const colEditar = document.createElement('td');
         botonEditar.setAttribute('class', 'btn btn-warning');
-        const tdEdit = document.createElement('td');
-        tdEdit.appendChild(botonEditar);
-        tr.appendChild(tdEdit);
+        botonEditar.addEventListener('click', () => {
+            window.location = `detailpets.html?name=${object}`;
+        })
+        //para que el boton editar me lleve a editar el objeto seleccionado, lo tengo que pasar como parametro. el signo de ? separa la url del parametro (queryparams) que quiero especificar.
+        colEditar.appendChild(botonEditar)
+        tr.appendChild(colEditar);
 
         tbody.appendChild(tr);
     }

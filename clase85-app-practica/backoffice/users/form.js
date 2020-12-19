@@ -1,8 +1,7 @@
+const base = "https://ada-frontend-1d227-default-rtdb.firebaseio.com/"
+
 const url = new URL(window.location)
 const id = url.searchParams.get('name');
-console.log(id);
-
-const base = "https://ada-frontend-1d227-default-rtdb.firebaseio.com/"
 
 const inputName = document.getElementById("name");
 const inputEmail = document.getElementById("email");
@@ -24,7 +23,6 @@ const agregarUsuario = (event) => {
         },
         body: JSON.stringify(user),
     }).then((response) => {
-        console.log(response);
         return response.json()
     }).then((data) => {
         console.log(data)
@@ -58,6 +56,7 @@ const cargarForm = (id) => {
         .then((response) => {
             return response.json()
         }).then((data) => {
+            console.log(data);
             inputName.value = data.name
             inputEmail.value = data.email
             inputClave.value = data.password

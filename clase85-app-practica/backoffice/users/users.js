@@ -4,6 +4,7 @@ const init = () => {
     fetch(`${base}users.json`)
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             createTable(data);
         })
 };
@@ -21,17 +22,14 @@ const eliminar = (id) => {
     }).then(init);
 }
 
-
-
-
 const createTable = (data) => {
     const tbody = document.getElementById("tbody");
     tbody.innerHTML = "";
     for (let object in data) {
 
         const tr = document.createElement('tr');
+
         for (let item in data[object]) {
-            console.log(item);
             const td = document.createElement('td');
             td.innerHTML = data[object][item];
             tr.appendChild(td);
@@ -49,7 +47,7 @@ const createTable = (data) => {
 
         const botonEditar = document.createElement('button');
         botonEditar.addEventListener('click', () => {
-            window.location = `detail.html?name=${object}`;
+            window.location = `form.html?name=${object}`;
         });
         botonEditar.innerText = 'Editar';
         botonEditar.setAttribute('class', 'btn btn-warning');
