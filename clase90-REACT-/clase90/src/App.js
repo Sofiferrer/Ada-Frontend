@@ -1,10 +1,24 @@
+import { Header } from "./components";
 
 const App = () => {
-  let cont = 4;
+  const navItems = [
+    {
+      text: 'Inicio',
+      link: '/'
+    },
+    {
+      text: 'Servicios',
+      link: '/servicios'
+    },
+    {
+      text: 'Contacto',
+      link: '/contacto'
+    }
+  ]
   return (
     <div className="mi app" id="mi app">
+      <Header menuItems={navItems} />
       <h1>Mi primera app REACT</h1>
-      Mi contador esta en {cont}
     </div>
   );
 }
