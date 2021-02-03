@@ -1,6 +1,5 @@
-import React from 'react'
 
-function App() {
+const App = () => {
   return (
     <h1>Mi repaso</h1>
   );

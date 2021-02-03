@@ -1,4 +1,4 @@
-const base = "https://ada-frontend-1d227-default-rtdb.firebaseio.com/"
+const base = "https://tp3-js-1e38b-default-rtdb.firebaseio.com/"
 
 const init = () => {
     fetch(`${base}users.json`)
